@@ -56,7 +56,8 @@ end
 Calculate a `N`D radial distribution function (RDF) using a function `func` for constructing
 an empirical distribution for RDF.
 """
-function rdf(func, data::Array{T,3}, box::Vector{T}, bins::Int...; kwargs...) where T
+function rdf(func, data::Array{T,3}, box::Vector{T}, bins::Int...;
+            volfunc = (up,lw)->(up^3 - lw^3), kwargs...) where T
     hist = rdfhist(func, data, bins...; kwargs...)
     Δs = map(step, hist.edges)
     pnum, _, fnum = size(data)
@@ -70,7 +71,7 @@ function rdf(func, data::Array{T,3}, box::Vector{T}, bins::Int...; kwargs...) wh
         if i == 1
             lw = (ci.I[i] - 1)*Δs[i]
             up = lw + Δs[i]
-            dVρ = c * (up^3 - lw^3)
+            dVρ = c * volfunc(up, lw)
             gr[ci] = hist.weights[ci] / N / dVρ
         else
             gr[ci] /= bins[i]
