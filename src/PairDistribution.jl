@@ -122,7 +122,7 @@ function rdfinter2d(gr, rs; bins=30, maxval=0.1, dist=(0.0,Inf))
     z = hcat(copy(gr), gr[:,1])
     # filter distances
     minidx = findfirst(d->d>=dist[1],rs[1])
-    minidx = maxidx === nothing ? 1 : maxidx
+    minidx = minidx === nothing ? 1 : maxidx
     maxidx = findfirst(d->d>=dist[2],rs[1])
     maxidx = maxidx === nothing ? length(rs[1]) : maxidx
     dd = rs[1][minidx:maxidx]
