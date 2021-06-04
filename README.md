@@ -30,7 +30,7 @@ julia> box
  34.3141
  34.3141
 
-julia> # claculate g(r) with 100 bins histogram and distances in [0.0,8.0] range.
+julia> # calculate g(r) with 100 bins histogram and distances in [0.0,8.0] range.
 
 julia> using PairDistribution
 
