@@ -73,8 +73,6 @@ function rdf(func, data::Array{T,3}, box::Vector{T}, bins::Int...;
             up = lw + Δs[i]
             dVρ = c * volfunc(up, lw)
             gr[ci] = hist.weights[ci] / N / dVρ
-        else
-            gr[ci] /= bins[i]
         end
     end
     rs = [collect(r)[1:end-1].+dr for (r,dr) in zip(hist.edges, Δs)]
@@ -90,7 +88,7 @@ function rdf1d(data::Array{T,3}, box::Vector{T}, bins::Int...; kwargs...) where 
     rdf(data, box, bins...; kwargs...) do (_, ri, rj)
         rij = PairDistribution.distpbc(rj, ri, box)
         r2 = sum(abs2, rij)
-        [sqrt(r2)]
+        [sqrt(r2), sqrt(r2)]
     end
 end
 
